@@ -48,7 +48,7 @@ terraform apply
 ### Ansible
 ```bash
 cd iac/ansible
-ansible-playbook playbook.yml
+ansible-playbook playbook/site.yml
 ```
 
 ## Prérequis
