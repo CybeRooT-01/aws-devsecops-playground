@@ -1,0 +1,31 @@
+---
+- name: Download AWS CLI v2
+  ansible.builtin.get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscliv2.zip
+    mode: "0644"
+
+- name: Ensure correct permissions on AWS CLI zip
+  ansible.builtin.file:
+    path: /tmp/awscliv2.zip
+    mode: "0644"
+
+- name: Unzip AWS CLI
+  ansible.builtin.unarchive:
+    src: /tmp/awscliv2.zip
+    dest: /tmp/
+    remote_src: true
+
+- name: Install AWS CLI
+  ansible.builtin.command: /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
+
+- name: Verify AWS CLI installation
+  ansible.builtin.command: aws --version
+  register: aws_version
+  changed_when: false
+
+- name: Display AWS CLI version
+  ansible.builtin.debug:
+    msg: "{{ aws_version.stdout }}"

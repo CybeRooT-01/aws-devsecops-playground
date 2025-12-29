@@ -1,0 +1,21 @@
+---
+- name: Get latest ArgoCD version
+  ansible.builtin.uri:
+    url: https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION
+    return_content: true
+  register: argocd_version
+
+- name: Download ArgoCD CLI
+  ansible.builtin.get_url:
+    url: "https://github.com/argoproj/argo-cd/releases/download/v{{ argocd_version.content | trim }}/argocd-linux-amd64"
+    dest: /usr/local/bin/argocd
+    mode: "0755"
+
+- name: Verify ArgoCD installation
+  ansible.builtin.command: argocd version --client
+  register: argocd_version_output
+  changed_when: false
+
+- name: Display ArgoCD version
+  ansible.builtin.debug:
+    msg: "{{ argocd_version_output.stdout }}"

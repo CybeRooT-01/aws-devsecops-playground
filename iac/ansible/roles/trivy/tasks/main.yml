@@ -1,0 +1,36 @@
+---
+- name: Download Trivy public key
+  ansible.builtin.get_url:
+    url: https://aquasecurity.github.io/trivy-repo/deb/public.key
+    dest: /tmp/trivy-public.key
+    mode: "0644"
+    force: false
+
+- name: Convert Trivy public key to gpg format
+  ansible.builtin.shell: |
+    set -o pipefail
+    gpg --dearmor < /tmp/trivy-public.key > /usr/share/keyrings/trivy.gpg
+  args:
+    executable: /bin/bash
+    creates: /usr/share/keyrings/trivy.gpg
+
+- name: Add Trivy repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main"
+    state: present
+    filename: trivy
+
+- name: Install Trivy
+  ansible.builtin.apt:
+    name: trivy
+    state: present
+    update_cache: true
+
+- name: Verify Trivy installation
+  ansible.builtin.command: trivy --version
+  register: trivy_version
+  changed_when: false
+
+- name: Display Trivy version
+  ansible.builtin.debug:
+    msg: "{{ trivy_version.stdout }}"

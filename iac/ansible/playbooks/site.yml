@@ -1,0 +1,14 @@
+---
+- name: Setup Complete DevOps Server
+  hosts: devops_server
+  become: true
+  roles:
+    - common
+    - docker
+    - aws-cli
+    - kubectl
+    - helm
+    - argocd
+    - trivy
+    - sonarqube
+    - jenkins

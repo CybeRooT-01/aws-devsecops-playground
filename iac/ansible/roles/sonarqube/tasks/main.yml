@@ -1,0 +1,28 @@
+---
+- name: Pull SonarQube Docker image
+  community.docker.docker_image:
+    name: sonarqube:lts-community
+    source: pull
+
+- name: Run SonarQube container
+  community.docker.docker_container:
+    name: sonarqube
+    image: sonarqube:lts-community
+    state: started
+    restart_policy: always
+    ports:
+      - "9000:9000"
+    env:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+
+- name: Wait for SonarQube to start
+  ansible.builtin.wait_for:
+    port: 9000
+    delay: 20
+    timeout: 120
+
+- name: Display SonarQube info
+  ansible.builtin.debug:
+    msg:
+      - "SonarQube URL: http://{{ ansible_default_ipv4.address }}:9000"
+      - "Default credentials: admin / admin"

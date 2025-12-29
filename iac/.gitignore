@@ -1,0 +1,87 @@
+# Auto-generated .gitignore for sensitive files — review and adjust
+# Add or remove entries as needed, do NOT commit secrets to the repository.
+
+# --------------------------
+# Terraform
+# --------------------------
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraform/
+
+# explicit terraform state files found in this repo
+/infra_terraform/terraform.tfstate
+/infra_terraform/terraform.tfstate.backup
+
+# --------------------------
+# Keys, certificates and private material
+# --------------------------
+*.pem
+*.key
+*.ppk
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Explicit private key(s) found in this repo
+/ansible/devSecOps.pem
+
+ansible/*.pem
+
+# --------------------------
+# Ansible
+# --------------------------
+*.retry
+group_vars/*
+host_vars/*
+ansible.cfg
+vault_password.txt
+*.vault
+
+# --------------------------
+# Environment files
+# --------------------------
+.env
+.env.*
+.envrc
+*.secret
+secrets.yml
+
+# --------------------------
+# Cloud provider / credentials
+# --------------------------
+.aws/
+credentials
+config
+
+# --------------------------
+# Kubernetes
+# --------------------------
+.kube/
+kubeconfig
+kubeconfig.*
+*.kubeconfig
+
+# --------------------------
+# IDEs / editors / OS
+# --------------------------
+.vscode/
+.idea/
+*.iml
+*.swp
+
+# --------------------------
+# Languages / runtimes
+# --------------------------
+__pycache__/
+*.pyc
+venv/
+node_modules/
+
+# --------------------------
+# Misc
+# --------------------------
+*.log
+*.bak
+*.old

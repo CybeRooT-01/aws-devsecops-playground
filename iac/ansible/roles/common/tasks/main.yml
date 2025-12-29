@@ -1,0 +1,21 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install essential packages
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - unzip
+      - ca-certificates
+      - apt-transport-https
+      - gnupg
+      - software-properties-common
+    state: present
+
+- name: Set timezone
+  community.general.timezone:
+    name: Africa/Dakar

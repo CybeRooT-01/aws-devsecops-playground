@@ -1,0 +1,14 @@
+---
+# Versions (sa casse ma config so jles utilise pas pour l'instant)
+docker_version: "latest"
+kubectl_version: "1.30.4"
+helm_version: "3.16.1"
+java_version: "17"
+
+# Ports
+jenkins_port: 8080
+sonarqube_port: 9000
+
+# Docker config
+docker_users:
+  - ubuntu

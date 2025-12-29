@@ -1,0 +1,23 @@
+---
+- name: Download kubectl
+  ansible.builtin.get_url:
+    #url: "https://dl.k8s.io/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl"
+    url: "https://dl.k8s.io/release/v1.30.4/bin/linux/amd64/kubectl"
+    
+    dest: /tmp/kubectl
+    mode: '0755'
+
+- name: Install kubectl
+  ansible.builtin.copy:
+    src: /tmp/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: '0755'
+    remote_src: true
+- name: Verify kubectl installation
+  ansible.builtin.command: kubectl version --client
+  register: kubectl_version_output
+  changed_when: false
+
+- name: Display kubectl version
+  ansible.builtin.debug:
+    msg: "{{ kubectl_version_output.stdout }}"
