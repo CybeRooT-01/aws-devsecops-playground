@@ -1,4 +1,3 @@
-Ce document reprend tout ce que tu as appris sur Terraform, mais de manière structurée, propre et compréhensible, sans perdre les explications essentielles. Mais n'empeche que ce doc ne couvre pas tout c'est faut checker la doc de terraform.
 # 1. Comprendre Terraform
 
 Terraform est un outil d'Infrastructure as Code (IaC). L'idée est simple : tu écris du code pour décrire ton infrastructure, puis Terraform s'occupe de la créer et de la maintenir.
